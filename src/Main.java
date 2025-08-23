@@ -2,8 +2,9 @@ import java.util.Scanner;
 
 public class Main {
     //  Global Variables
+    final int fixed_Size = 50;
     static Scanner sc = new Scanner(System.in);
-    int[] animals = new int[50];
+    int[] animals = new int[fixed_Size];
 
     public static void main(String[] args) {
         //Instantiation.
@@ -55,25 +56,33 @@ public class Main {
 
 
     }//end of main
+//  METHODS FOR THE OPTIONS -- Dissolves the workload into multiple respective methods for a readable and manageable code.
 
     public void addAnimals() {
+//       DO: Method for adding the animals...
+//       - Focus on adding the animals and adding the counters for them
+//       - Accounts their names, age, species, enclosure num...
 
     }//method for adding animal.
 
     public void viewAnimals() {
-
+//      DO: Method for viewing the animals...
+//      - 2nd to Work on
     }
 
     public void searchAnimals() {
-
+//      DO: Method for searching the animals...
+//      - 3rd to Work on
     }
 
     public void countAnimals() {
-
+//      DO: Method for counting the animals...
+//      - 4th to Work on
     }
 
     public void viewAnimalsEnclosure() {
-
+//      DO: Method for viewing the animals based on their enclosure...
+//      - 5th and Final Work
     }
 
     //  Exception Handling Methods
@@ -93,6 +102,6 @@ public class Main {
         }
 
         return numTemp;
-    }
+    }//     Method dedicated for checking the input validation. (String X - int 0)
 
 }//end of class

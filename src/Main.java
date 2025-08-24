@@ -2,16 +2,18 @@ import java.util.Scanner;
 
 public class Main {
     //  Global Variables
-    final int fixed_Size = 50;
+    static final int FIXED_SIZE = 50;
     static Scanner sc = new Scanner(System.in);
-    int[] animals = new int[fixed_Size];
+    static String[] animalNames = new String[FIXED_SIZE];
+    static String[] animalSpecies = new String[FIXED_SIZE];
+    static int[] animalAges = new int[FIXED_SIZE];
+    static int[] animalEnclosureNum = new int[FIXED_SIZE];
 
     public static void main(String[] args) {
-        //Instantiation.
-        Main main = new Main();
         //Variables.
         int userChoice;
         boolean repeaterFlag = true;
+        int counter = 0;
 
         System.out.println("Welcome to Z-Inventory System!");
         System.out.println("------------------------------");
@@ -25,23 +27,24 @@ public class Main {
                 """); //Used txt block - cleaner code.
 
         while (repeaterFlag) {
-            userChoice = main.scanInt("Enter your choice: ");
-
+            userChoice = scanInt("Enter your choice: ");
+            sc.nextLine();
             switch (userChoice) {
                 case 1:
-                    main.addAnimals();
+                    addAnimals(counter);
+                    counter++;
                     break;
                 case 2:
-                    main.viewAnimals();
+                    viewAnimals();
                     break;
                 case 3:
-                    main.searchAnimals();
+                    searchAnimals();
                     break;
                 case 4:
-                    main.countAnimals();
+                    countAnimals();
                     break;
                 case 5:
-                    main.viewAnimalsEnclosure();
+                    viewAnimalsEnclosure();
                     break;
                 case 6:
                     System.out.println("\nThank you for using our system!");
@@ -54,39 +57,64 @@ public class Main {
             }
         }
 
-
     }//end of main
 //  METHODS FOR THE OPTIONS -- Dissolves the workload into multiple respective methods for a readable and manageable code.
 
-    public void addAnimals() {
-//       DO: Method for adding the animals...
-//       - Focus on adding the animals and adding the counters for them
-//       - Accounts their names, age, species, enclosure num...
+    public static void addAnimals(int counter) {
+        int enclosureNumValid;
+        int animalAgeValid;
+
+        System.out.print("Enter an animal name: ");
+        animalNames[counter] = sc.nextLine();
+        System.out.print("Enter species: ");
+        animalSpecies[counter] = sc.nextLine();
+
+        do {
+            animalAgeValid = scanInt("Enter animal age: ");
+
+            if(animalAgeValid < 0){
+                System.out.println("Invalid age. Try again.\n");
+                continue;
+            }else {
+                animalAges[counter] = animalAgeValid;
+            }
+
+            enclosureNumValid = scanInt("Enter enclosure number: ");
+
+            if (enclosureNumValid > 4 || enclosureNumValid < 0)
+                System.out.println("Invalid enclosure number! Input numbers from (0 - 4).\n");
+            else {
+                animalEnclosureNum[counter] = enclosureNumValid;
+                break;
+            }
+        }while(true);
+
+        System.out.println("\nAnimal added successfully!\n");
 
     }//method for adding animal.
 
-    public void viewAnimals() {
+    public static void viewAnimals() {
 //      DO: Method for viewing the animals...
 //      - 2nd to Work on
     }
 
-    public void searchAnimals() {
+    public static void searchAnimals() {
 //      DO: Method for searching the animals...
 //      - 3rd to Work on
     }
 
-    public void countAnimals() {
+    public static void countAnimals() {
 //      DO: Method for counting the animals...
 //      - 4th to Work on
     }
 
-    public void viewAnimalsEnclosure() {
+    public static void viewAnimalsEnclosure() {
 //      DO: Method for viewing the animals based on their enclosure...
 //      - 5th and Final Work
     }
 
     //  Exception Handling Methods
-    public int scanInt(String inputPrompt) {
+    public static int scanInt(String inputPrompt) {
         int numTemp;
 
         while (true) {

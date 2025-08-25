@@ -41,7 +41,7 @@ public class Main {
                     searchAnimals(counter);
                     break;
                 case 4:
-                    countAnimals();
+                    countAnimals(counter);
                     break;
                 case 5:
                     viewAnimalsEnclosure();
@@ -102,6 +102,11 @@ public class Main {
     }//method for adding animals.
 
     public static void viewAnimals(int counter) {
+        if (animalNames[0] == null) {
+            System.out.println("No animals in the zoo. Add an animal first.\n");
+            return;
+        }
+
         System.out.println("List of animals: ");
         System.out.println("-----------------------------------------------------");
         for (int i = 0; i < counter; i++) {
@@ -117,6 +122,11 @@ public class Main {
 
     public static void searchAnimals(int counter) {
         boolean isFound = false;
+
+        if (animalNames[0] == null) {
+            System.out.println("No animals in the zoo. Add an animal first.\n");
+            return;
+        }
 
         System.out.print("Search for animal named: ");
         String targetAnimalName = sc.nextLine();
@@ -137,17 +147,65 @@ public class Main {
         if (!isFound)
             System.out.println("No animal named: " + targetAnimalName + "\n");
 
-    }
+    }//method for searching an animal by name.
 
-    public static void countAnimals() {
-//      DO: Method for counting the animals...
-//      - 4th to Work on
-    }
+    public static void countAnimals(int counter) {
+        if (animalNames[0] == null) {
+            System.out.println("No animals in the zoo. Add an animal first.\n");
+            return;
+        }
+
+        String[] uniqueSpecies = new String[2];
+        int[] uniqueSpeciesCounter = new int[2];
+        int uniqueCounter = 0;
+
+        for (int i = 0; i < counter; i++) {
+            // Duplicate flag - detects if an array contains duplicates.
+            boolean isDuplicate = false;
+
+            // Compares the elements of animal species to elements of unique species, If spotted duplicate counter will increase.
+            for (int j = 0; j < uniqueCounter; j++) {
+                if (animalSpecies[i].equalsIgnoreCase(uniqueSpecies[j])) {
+                    uniqueSpeciesCounter[j]++;
+                    isDuplicate = true;
+                    break;
+                }
+            }
+            // If conditioned to trigger when no duplicates found - will update the unique species arrays.
+            if (!isDuplicate) {
+                // When array capacity reached -> enlarges the length by twofold
+                if (uniqueCounter >= uniqueSpecies.length) {
+                    String[] tempArr = uniqueSpecies;
+                    int[] tempCounterArr = uniqueSpeciesCounter;
+
+                    uniqueSpecies = new String[uniqueSpecies.length * 2];
+                    uniqueSpeciesCounter = new int[uniqueSpeciesCounter.length * 2];
+
+                    for (int j = 0; j < tempArr.length; j++) {
+                        uniqueSpecies[j] = tempArr[j];
+                        uniqueSpeciesCounter[j] = tempCounterArr[j];
+                    }
+                }
+
+                // Stores the unique arrays.
+                uniqueSpecies[uniqueCounter] = animalSpecies[i];
+                uniqueSpeciesCounter[uniqueCounter] = 1;
+                uniqueCounter++;
+            }
+        }
+
+        for (int i = 0; i < uniqueCounter; i++) {
+            System.out.println(uniqueSpecies[i] + " appeared: " + uniqueSpeciesCounter[i]);
+        }
+        System.out.println();//Spacing
+
+
+    }// method for counting animals by species.
 
     public static void viewAnimalsEnclosure() {
 //      DO: Method for viewing the animals based on their enclosure...
 //      - 5th and Final Work
-    }
+    }// method for viewing animals by enclosure.
 
     //  Exception Handling Methods
     public static int scanInt(String inputPrompt) {
@@ -156,7 +214,6 @@ public class Main {
         while (true) {
             try {
                 System.out.print(inputPrompt);
-
                 numTemp = sc.nextInt();
                 break;
             } catch (Exception e) {
@@ -187,6 +244,5 @@ public class Main {
         return temp;
 
     }//Method dedicated for checking the String if contains w numbers and if blank.
-
 
 }//end of class

@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     //  Global Variables
-    static final int FIXED_SIZE = 50;
+    static final int FIXED_SIZE = 50;//Turn it back to 50 animals after
     static Scanner sc = new Scanner(System.in);
     static String[] animalNames = new String[FIXED_SIZE];
     static String[] animalSpecies = new String[FIXED_SIZE];
@@ -35,10 +35,10 @@ public class Main {
                     counter++;
                     break;
                 case 2:
-                    viewAnimals();
+                    viewAnimals(counter);
                     break;
                 case 3:
-                    searchAnimals();
+                    searchAnimals(counter);
                     break;
                 case 4:
                     countAnimals();
@@ -51,7 +51,7 @@ public class Main {
                     repeaterFlag = false;
                     break;
                 default:
-                    System.out.println("Invalid input. Choose within the choices.\n");
+                    System.out.println("Invalid input. Choose within the choices.");
                     break;
 
             }
@@ -64,6 +64,12 @@ public class Main {
         int enclosureNumValid;
         int animalAgeValid;
 
+//      Condition checks if the arrays are full - in case of scenarios that exceeds 50 animal inputs.
+        if (counter >= animalNames.length) {
+            System.out.println("Zoo is full!");
+            return;
+        }
+
         System.out.print("Enter an animal name: ");
         animalNames[counter] = sc.nextLine();
         System.out.print("Enter species: ");
@@ -72,35 +78,67 @@ public class Main {
         do {
             animalAgeValid = scanInt("Enter animal age: ");
 
-            if(animalAgeValid < 0){
+            if (animalAgeValid < 0) {
                 System.out.println("Invalid age. Try again.\n");
                 continue;
-            }else {
+            } else {
                 animalAges[counter] = animalAgeValid;
             }
+            do {
+                enclosureNumValid = scanInt("Enter enclosure number: ");
 
-            enclosureNumValid = scanInt("Enter enclosure number: ");
+                if (enclosureNumValid > 4 || enclosureNumValid < 0)
+                    System.out.println("Invalid enclosure number! Input numbers from (0 - 4).\n");
 
-            if (enclosureNumValid > 4 || enclosureNumValid < 0)
-                System.out.println("Invalid enclosure number! Input numbers from (0 - 4).\n");
-            else {
-                animalEnclosureNum[counter] = enclosureNumValid;
+                else {
+                    animalEnclosureNum[counter] = enclosureNumValid;
+                    break;
+                }
+            } while (true);
+            break;
+
+        } while (true);
+
+        System.out.println("\nAnimal added successfully!");
+
+    }//method for adding animals.
+
+    public static void viewAnimals(int counter) {
+        System.out.println("List of animals: ");
+        System.out.println("-----------------------------------------------------");
+        for (int i = 0; i < counter; i++) {
+            System.out.printf("""
+                            Name: %s | Species: %s | Age: %d | Enclosure: %d
+                            """,
+                    animalNames[i], animalSpecies[i], animalAges[i], animalEnclosureNum[i]);
+
+        }
+        System.out.println();//Spacing
+
+    }//method for viewing the animals.
+
+    public static void searchAnimals(int counter) {
+        boolean isFound = false;
+
+        System.out.print("Search for animal named: ");
+        String targetAnimalName = sc.nextLine();
+
+        for (int i = 0; i < counter; i++) {
+            if (targetAnimalName.equalsIgnoreCase(animalNames[i])) {
+                System.out.println("Animal founded!");
+                System.out.printf("""
+                                Name: %s | Species: %s | Age: %d | Enclosure: %d
+                                """,
+                        animalNames[i], animalSpecies[i], animalAges[i], animalEnclosureNum[i]);
+                System.out.println();//Spacing
+                isFound = true;
                 break;
             }
-        }while(true);
 
-        System.out.println("\nAnimal added successfully!\n");
+        }
+        if (!isFound)
+            System.out.println("No animal named: " + targetAnimalName + "\n");
 
-    }//method for adding animal.
-
-    public static void viewAnimals() {
-//      DO: Method for viewing the animals...
-//      - 2nd to Work on
-    }
-
-    public static void searchAnimals() {
-//      DO: Method for searching the animals...
-//      - 3rd to Work on
     }
 
     public static void countAnimals() {
@@ -130,6 +168,7 @@ public class Main {
         }
 
         return numTemp;
-    }//     Method dedicated for checking the input validation. (String X - int 0)
+    }//Method dedicated for checking the input validation. (String X - int 0)
+
 
 }//end of class

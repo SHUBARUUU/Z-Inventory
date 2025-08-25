@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     //  Global Variables
-    static final int FIXED_SIZE = 50;//Turn it back to 50 animals after
+    static final int FIXED_SIZE = 50;
     static Scanner sc = new Scanner(System.in);
     static String[] animalNames = new String[FIXED_SIZE];
     static String[] animalSpecies = new String[FIXED_SIZE];
@@ -70,10 +70,8 @@ public class Main {
             return;
         }
 
-        System.out.print("Enter an animal name: ");
-        animalNames[counter] = sc.nextLine();
-        System.out.print("Enter species: ");
-        animalSpecies[counter] = sc.nextLine();
+        animalNames[counter] = scanString("Enter animal name: ");
+        animalSpecies[counter] = scanString("Enter species: ");
 
         do {
             animalAgeValid = scanInt("Enter animal age: ");
@@ -169,6 +167,26 @@ public class Main {
 
         return numTemp;
     }//Method dedicated for checking the input validation. (String X - int 0)
+
+    public static String scanString(String inputPrompt) {
+        String temp;
+
+        while (true) {
+            System.out.print(inputPrompt);
+            temp = sc.nextLine();
+
+            if (temp.matches(".*\\d.*")) {
+                System.out.println("Input contains numbers. Try again!\n");
+            } else if (temp.isEmpty()) {
+                System.out.println("Input is blank. Try again!\n");
+            } else {
+                break;
+            }
+        }
+
+        return temp;
+
+    }//Method dedicated for checking the String if contains w numbers and if blank.
 
 
 }//end of class

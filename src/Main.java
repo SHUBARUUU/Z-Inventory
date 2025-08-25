@@ -14,7 +14,7 @@ public class Main {
         int userChoice;
         boolean repeaterFlag = true;
         int counter = 0;
-
+        System.out.println("TITE");
         System.out.println("Welcome to Z-Inventory System!");
         System.out.println("------------------------------");
         System.out.println("""

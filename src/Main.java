@@ -15,18 +15,18 @@ public class Main {
         boolean repeaterFlag = true;
         int counter = 0;
 
-        System.out.println("Welcome to Z-Inventory System!");
-        System.out.println("------------------------------");
-        System.out.println("""
-                1. Add a new animal
-                2. View all animals
-                3. Search animal by name
-                4. Count animals by species
-                5. View animals by enclosure
-                6. Exit
-                """); //Used txt block - cleaner code.
-
         while (repeaterFlag) {
+            System.out.println("Welcome to Z-Inventory System!");
+            System.out.println("------------------------------");
+            System.out.println("""
+                    1. Add a new animal
+                    2. View all animals
+                    3. Search animal by name
+                    4. Count animals by species
+                    5. View animals by enclosure
+                    6. Exit
+                    """); //Used txt block - cleaner code.
+
             userChoice = scanInt("Enter your choice: ");
             sc.nextLine();
             switch (userChoice) {
@@ -150,55 +150,30 @@ public class Main {
     }//method for searching an animal by name.
 
     public static void countAnimals(int counter) {
+        String targetSpecie;
+        int specieCounter = 0;
+        boolean isFound = false;
+
         if (animalNames[0] == null) {
             System.out.println("No animals in the zoo. Add an animal first.\n");
             return;
         }
 
-        String[] uniqueSpecies = new String[2];
-        int[] uniqueSpeciesCounter = new int[2];
-        int uniqueCounter = 0;
+        targetSpecie = scanString("Enter species to count: ");
 
         for (int i = 0; i < counter; i++) {
-            // Duplicate flag - detects if an array contains duplicates.
-            boolean isDuplicate = false;
-
-            // Compares the elements of animal species to elements of unique species, If spotted duplicate counter will increase.
-            for (int j = 0; j < uniqueCounter; j++) {
-                if (animalSpecies[i].equalsIgnoreCase(uniqueSpecies[j])) {
-                    uniqueSpeciesCounter[j]++;
-                    isDuplicate = true;
-                    break;
-                }
-            }
-            // If conditioned to trigger when no duplicates found - will update the unique species arrays.
-            if (!isDuplicate) {
-                // When array capacity reached -> enlarges the length by twofold
-                if (uniqueCounter >= uniqueSpecies.length) {
-                    String[] tempArr = uniqueSpecies;
-                    int[] tempCounterArr = uniqueSpeciesCounter;
-
-                    uniqueSpecies = new String[uniqueSpecies.length * 2];
-                    uniqueSpeciesCounter = new int[uniqueSpeciesCounter.length * 2];
-
-                    for (int j = 0; j < tempArr.length; j++) {
-                        uniqueSpecies[j] = tempArr[j];
-                        uniqueSpeciesCounter[j] = tempCounterArr[j];
-                    }
-                }
-
-                // Stores the unique arrays.
-                uniqueSpecies[uniqueCounter] = animalSpecies[i];
-                uniqueSpeciesCounter[uniqueCounter] = 1;
-                uniqueCounter++;
+            if (targetSpecie.equalsIgnoreCase(animalSpecies[i])) {
+                specieCounter++;
+                isFound = true;
             }
         }
 
-        for (int i = 0; i < uniqueCounter; i++) {
-            System.out.println(uniqueSpecies[i] + " appeared: " + uniqueSpeciesCounter[i]);
-        }
-        System.out.println();//Spacing
+        if (!isFound)
+            System.out.printf("%s is not found in the zoo.", targetSpecie);
+        else
+            System.out.printf("%s counter  in the zoo: %d", targetSpecie, specieCounter);
 
+        System.out.println("\n");//Spacing
 
     }// method for counting animals by species.
 
@@ -211,7 +186,7 @@ public class Main {
         while (true) {
             int targetEnclosureNum = scanInt("Enter enclosure number (0-4): ");
 
-            if (targetEnclosureNum > 4 || targetEnclosureNum < 0){
+            if (targetEnclosureNum > 4 || targetEnclosureNum < 0) {
                 System.out.println("Invalid enclosure number! Input numbers from (0 - 4).\n");
                 continue;
             }
@@ -219,16 +194,16 @@ public class Main {
             boolean isFound = false;
 
             for (int i = 0; i < counter; i++) {
-                if(targetEnclosureNum == animalEnclosureNum[i]){
+                if (targetEnclosureNum == animalEnclosureNum[i]) {
                     System.out.printf("""
-                            Name: %s | Species: %s | Age: %d | Enclosure: %d
-                            """,
+                                    Name: %s | Species: %s | Age: %d | Enclosure: %d
+                                    """,
                             animalNames[i], animalSpecies[i], animalAges[i], animalEnclosureNum[i]);
                     isFound = true;
                 }
             }
 
-            if(!isFound){
+            if (!isFound) {
                 System.out.println("No animals present in enclosure " + targetEnclosureNum);
             }
 

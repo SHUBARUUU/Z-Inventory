@@ -205,6 +205,7 @@ public class Main {
     public static void viewAnimalsEnclosure() {
 //      DO: Method for viewing the animals based on their enclosure...
 //      - 5th and Final Work
+        System.out.println("CODE OUTDATED!");
     }// method for viewing animals by enclosure.
 
     //  Exception Handling Methods

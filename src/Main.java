@@ -44,7 +44,7 @@ public class Main {
                     countAnimals(counter);
                     break;
                 case 5:
-                    viewAnimalsEnclosure();
+                    viewAnimalsEnclosure(counter);
                     break;
                 case 6:
                     System.out.println("\nThank you for using our system!");
@@ -202,9 +202,42 @@ public class Main {
 
     }// method for counting animals by species.
 
-    public static void viewAnimalsEnclosure() {
-//      DO: Method for viewing the animals based on their enclosure...
-//      - 5th and Final Work
+    public static void viewAnimalsEnclosure(int counter) {
+        if (animalNames[0] == null) {
+            System.out.println("No animals in the zoo. Add an animal first.\n");
+            return;
+        }
+
+        while (true) {
+            int targetEnclosureNum = scanInt("Enter enclosure number (0-4): ");
+
+            if (targetEnclosureNum > 4 || targetEnclosureNum < 0){
+                System.out.println("Invalid enclosure number! Input numbers from (0 - 4).\n");
+                continue;
+            }
+
+            boolean isFound = false;
+
+            for (int i = 0; i < counter; i++) {
+                if(targetEnclosureNum == animalEnclosureNum[i]){
+                    System.out.printf("""
+                            Name: %s | Species: %s | Age: %d | Enclosure: %d
+                            """,
+                            animalNames[i], animalSpecies[i], animalAges[i], animalEnclosureNum[i]);
+                    isFound = true;
+                }
+            }
+
+            if(!isFound){
+                System.out.println("No animals present in enclosure " + targetEnclosureNum);
+            }
+
+            System.out.println();//Spacing
+            break;
+
+        }
+
+
     }// method for viewing animals by enclosure.
 
     //  Exception Handling Methods

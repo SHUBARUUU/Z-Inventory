@@ -221,8 +221,8 @@ public class Main {
             for (int i = 0; i < counter; i++) {
                 if (targetEnclosureNum == animalEnclosureNum[i]) {
                     System.out.printf("""
-	                                    Name: %s | Species: %s | Age: %d | Enclosure: %d
-	                                    """,
+                                    Name: %s | Species: %s | Age: %d | Enclosure: %d
+                                    """,
                             animalNames[i], animalSpecies[i], animalAges[i], animalEnclosureNum[i]);
                     isFound = true;
                 }
